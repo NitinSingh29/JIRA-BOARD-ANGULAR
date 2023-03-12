@@ -1,0 +1,32 @@
+<div class="toolbar" role="banner">
+  JIRA Board
+</div>
+
+<div class="content" role="main">
+  <div class="addSection"><button (click)="addNewList()">Add New List</button></div>
+  <div class="row">
+      <div *ngFor="let item of cardData" class="col-md-2 sectionCard" 
+      (drop)="onDropCard($event, item.id)" (dragover)="onCardDrag($event)">
+        <div class="sectionHeader" >
+          <span>{{item.cardHeader}}</span>
+          <span class="closeIcon" (click)="deleteList(item)">X</span>
+        </div>
+        <div *ngFor="let data of item.subCards; let i=index" class="subCard" id= "{{i}}" draggable="true" (dragstart)="drag($event, data, item.id)">
+            <h6>{{data.header}}</h6>
+            <p>{{data.desc}}</p>
+            <p>{{data.creationTime}}</p>
+        </div>
+        <div class="addCard">
+          <span class="addIcon" (click)="addNewCard(item.id)">+</span>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="modal" *ngIf="addList">
+  <div class="modal-content" >
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
